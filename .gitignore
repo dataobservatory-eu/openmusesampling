@@ -1,0 +1,8 @@
+_not_included/
+
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+docs
+inst/doc

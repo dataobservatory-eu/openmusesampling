@@ -1,0 +1,44 @@
+---
+title: "Saving track information"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Saving track information}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setupvignette, include = FALSE}
+library(here)
+if (file.exists(here("_not_included", "myenviron.R"))) {
+  source(here("_not_included", "myenviron.R"))
+}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(openmusesampling)
+library(spotifyr)
+## A relatively compless track item:
+start_time <- xsd_time()
+start_time
+one_track <- spotifyr::get_track("14ngWWxvUSnIMXgF6rzSk1")
+```
+
+```{r extract-isrc}
+extract_isrc(one_track)
+```
+
+We will need to connect tracks and artists, but often, one track is connected to a list of artists. To store it effectively in a data.frame, we will concatenate the list artist identifiers into a single character string.
+
+```{r extract-artist-uri}
+extract_artist_uri(one_track)
+```
+Only a few characteristics of the song change over time. We record these separately, because they need to be saved each time we "see" the same track. However, its constants do not need to be re-saved all the time.
+
+```{r extract_variables}
+extract_track_variables(track_df = one_track, time_query = start_time )
+```
+
