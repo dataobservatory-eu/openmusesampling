@@ -4,6 +4,6 @@ library(spotifyr)
 if (file.exists(here("_not_included", "myenviron.R"))) {
   source(here("_not_included", "myenviron.R"))
 }
-one_track <- get_track("14ngWWxvUSnIMXgF6rzSk1")
+get_track_return_raw <- get_track("14ngWWxvUSnIMXgF6rzSk1")
 
-usethis::use_data(one_track, overwrite = TRUE)
+usethis::use_data(get_track_return_raw, overwrite = TRUE)

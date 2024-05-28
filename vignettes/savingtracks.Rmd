@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(openmusesampling)
 library(spotifyr)
+library(knitr)
 ## A relatively compless track item:
 start_time <- xsd_time()
 start_time
@@ -42,3 +43,49 @@ Only a few characteristics of the song change over time. We record these separat
 extract_track_variables(track_df = one_track, time_query = start_time )
 ```
 
+## Variables to keep
+
+There is some returned information that is time-sensitive.  The popularity of the track or the number of markets changes over time.
+
+```{r}
+get_track_vars <-tibble::tribble(
+  ~spotify_name,        ~name,    ~description, 
+  "id",                 "spotify_track_id",   "key column for tracks",
+  NA_character_,        "time_query",        "time of query in XSD format",
+  "popularity",         "spotify_popularity", "the popularity of the item at the query time.", 
+  "available_markets",  "spotify_available_markets", "a concatenated string of markets at query time."
+)
+
+knitr::kable(get_track_vars)
+```
+
+
+## Attributes to keep
+
+The attributes are not changing over time, or changing only due to corrections of clerical errors. In this case, we only need to keep the information, if it is not yet saved. We will create a register of tracks where we already have the attributes, in their case, we only need to keep the variables.
+
+_Please continue with the data that you want to keep. I think that all data should be kept once, i.e., the spotify track id should be kept once, not in URL, URI and ID format._
+
+_Please consider_ `data-raw/get_track_data_raw` _and_ `data/get_track.data.raw` _(which can be reviewed in the package website.) or with_ `?get_track_return_raw`.
+
+- You should first define in each case what do you keep and how:
+
+
+```{r get_track_vars}
+get_track_vars <-tibble::tribble(
+  ~spotify_name,        ~name,    ~description, 
+  "id",                 "spotify_track_id",   "key column for tracks",
+  NA_character_,        "time_query",         "time of query in XSD format",
+  "popularity",         "spotify_popularity", "the popularity of the item at the query time.", 
+  "available_markets",  "spotify_available_markets", "a concatenated string of markets at query time."
+)
+
+knitr::kable(get_track_vars)
+```
+
+
+- Then create in the data-raw/ folder an example of saving the data in the form you want to keep them in store, i.e, a data-raw/mydataset.R
+
+- Then create the sample dataset with `usethis::use_data(get_track_return_raw, overwrite = TRUE)`.  This will attach an example of the dataset to this package.
+
+- Then create the documentation of the dataset using the sample of `R/data_get_track_return_raw.R`, this is how you attach a dataset documentation to an R package.
