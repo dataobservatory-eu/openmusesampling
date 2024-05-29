@@ -37,13 +37,16 @@ We will need to connect tracks and artists, but often, one track is connected to
 ```{r extract-artist-uri}
 extract_artist_uri(one_track)
 ```
+
+## Spotify's temporal variable
+
 Only a few characteristics of the song change over time. We record these separately, because they need to be saved each time we "see" the same track. However, its constants do not need to be re-saved all the time.
 
-```{r extract_variables}
+```{r extract_temporal_variables}
 extract_track_variables(track_df = one_track, time_query = start_time )
 ```
 
-## Variables to keep
+### Variables to keep
 
 There is some returned information that is time-sensitive.  The popularity of the track or the number of markets changes over time.
 
@@ -60,11 +63,21 @@ knitr::kable(get_track_vars)
 ```
 
 
-## Attributes to keep
+## Track attributes
+
+These are some variables that do not vary over time. They could potentially be interesting to keep.
+
+```{r extract_variables}
+extract_track_attributes(track_df = one_track)
+```
+
+### Attributes to keep
 
 The attributes are not changing over time, or changing only due to corrections of clerical errors. In this case, we only need to keep the information, if it is not yet saved. We will create a register of tracks where we already have the attributes, in their case, we only need to keep the variables.
 
 _Please continue with the data that you want to keep. I think that all data should be kept once, i.e., the spotify track id should be kept once, not in URL, URI and ID format._
+
+Could the saved on the attributes table as well and used as a key on the data base?
 
 _Please consider_ `data-raw/get_track_data_raw` _and_ `data/get_track.data.raw` _(which can be reviewed in the package website.) or with_ `?get_track_return_raw`.
 
@@ -73,11 +86,16 @@ _Please consider_ `data-raw/get_track_data_raw` _and_ `data/get_track.data.raw` 
 
 ```{r get_track_vars}
 get_track_vars <-tibble::tribble(
-  ~spotify_name,        ~name,    ~description, 
-  "id",                 "spotify_track_id",   "key column for tracks",
-  NA_character_,        "time_query",         "time of query in XSD format",
-  "popularity",         "spotify_popularity", "the popularity of the item at the query time.", 
-  "available_markets",  "spotify_available_markets", "a concatenated string of markets at query time."
+  ~spotify_name,        ~name,                ~description,
+  "external_ids.isrc",  "isrc",               "track isrc.",
+  "id",                 "spotify_track_id",   "key column for tracks.",
+  "name",               "name",               "the name of the track on spotify",
+  "duration_ms",        "duration_ms",        "the duration of the recording in ms.", 
+  "album.name",         "album_name",         "the name of the album.",
+  "album.uri",          "album_uri",          "spotify album's uri.",
+  "album.release_date", "release_date",       "the release date of the album.",
+  "artist.name",        "artist",             "the name of the artists on spotify.",
+  "artist.uri",         "artist_uri",         "spotify artists' uris."
 )
 
 knitr::kable(get_track_vars)
