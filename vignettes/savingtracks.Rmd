@@ -38,8 +38,6 @@ We will need to connect tracks and artists, but often, one track is connected to
 extract_artist_uri(one_track)
 ```
 
-## Spotify's temporal variable
-
 Only a few characteristics of the song change over time. We record these separately, because they need to be saved each time we "see" the same track. However, its constants do not need to be re-saved all the time.
 
 ```{r extract_temporal_variables}
@@ -63,9 +61,7 @@ knitr::kable(get_track_vars)
 ```
 
 
-## Track attributes
-
-These are some variables that do not vary over time. They could potentially be interesting to keep.
+An attribute is time-invariant information. We can extract a few of them.
 
 ```{r extract_variables}
 extract_track_attributes(track_df = one_track)
@@ -83,6 +79,7 @@ _Please consider_ `data-raw/get_track_data_raw` _and_ `data/get_track.data.raw` 
 
 - You should first define in each case what do you keep and how:
 
+These could be some of the attributes to keep. Obviously, we need to discuss what we want to keep and if the attributes described below are really useful or not.
 
 ```{r get_track_vars}
 get_track_vars <-tibble::tribble(
