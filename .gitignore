@@ -6,3 +6,5 @@ _not_included/
 .Ruserdata
 docs
 inst/doc
+/doc/
+/Meta/
