@@ -1,4 +1,10 @@
-url: ~
+url: https://dataobservatory-eu.github.io/openmusesampling/
 template:
   bootstrap: 5
 
+articles:
+  - title: "Saving track information"
+    desc: >
+     An overview of the reproducible workflow of **importing data**, preparing ...
+    contents:
+      - savingtracks
