@@ -28,7 +28,8 @@ sampling: function to generate sample mean statistics using a uniform Metropolis
 example <- openmusesampling("popularity", data = sample_data)
 example
 
-The sample mean calculated above should be close to the true sample mean and this true mean should be contained in the 95\% CI
+The sample mean calculated above should be close to the true sample mean and
+this true mean should be contained in the 95\% CI
 mean(sample_data$popularity)
 
 }
