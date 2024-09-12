@@ -1,0 +1,51 @@
+---
+title: "search_track_by_term"
+author: "Fabio Vieira"
+date: "2024-09-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The function
+
+The function search_track_by_terms is supposed to search Spotify API for tracks that contain the term being search. The function only takes on two parameters
+
+- **search_term**: a string containing the term being search (ex: "Olho")
+- **wasAssociatedWith**: the ORCID of the person performing the query.
+
+## Example
+
+# Loading packages
+
+```{r}
+library(here)
+library(spotifyr)
+library(openmusesampling)
+if (file.exists(here("_not_included", "myenviron.R"))) {
+  source(here("_not_included", "myenviron.R"))
+}
+```
+
+Running a query (this might take several minutes to run)
+
+```{r}
+df <- search_tracks_by_term(search_term = "Olho",
+                            wasAssociatedWith = "https://orcid.org/0000-0003-4253-1953")
+```
+
+## Output
+
+Checking the results
+
+```{r}
+head(df)
+```
+
+Additional information about the query (i.e. who perform the query, at what time, and so on)
+
+```{r}
+attr(df, "prov")
+```

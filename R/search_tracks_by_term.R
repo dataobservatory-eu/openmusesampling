@@ -62,7 +62,7 @@ search_tracks_by_term <- function(search_term, wasAssociatedWith) {
   #Selecting year of reference
   all_tracks_df$isrc_year <- substr(all_tracks_df$isrc, 6, 7)
 
-  prov <- provenance_statement(startedAtTime = startedAtTime, endedAtTime = Sys.time(), wasAssociatedWith = )
+  prov <- provenance_statement(startedAtTime = startedAtTime, endedAtTime = Sys.time(), wasAssociatedWith = wasAssociatedWith)
 
   attr(all_tracks_df, "provenance") <- prov
 
