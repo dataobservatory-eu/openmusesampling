@@ -1,0 +1,163 @@
+---
+title: "Columns description ALOADED data"
+author: 
+  name: "Fabio Vieira"
+  affiliation: "IViR, University of Amsterdam"
+  orcid: "0000-0003-4253-1953"
+papersize: A4
+format:
+  html: 
+    toc: true
+    toc-depth: 3
+  pdf:
+    toc: true
+    colorlinks: true
+    latex: 
+       - lof: true
+  docx:
+    toc: true
+  epub: 
+    toc: true
+    toc-depth: 3
+editor: visual
+bibliography: C:/Users/fgenv/Documents/openmusesampling/bib/references.bib
+---
+
+In this document I explain the columns in the ALOADED data. The column names will be written exactly as they appear when you open the file in Excel.
+
+## Columns
+
+-   **Royalty ID:** An integer with 11 characters uniquely identifying the royalties paid. Each row in the data set has a unique value in this column.
+
+-   **Asset ISRC:** The ISRC of the track involved in the sale (@ISO39101).
+
+-   **Asset Title:** A string with the name of the asset. They are mostly the same as the **Product Title** column, but some are different. I believe the tables which names end in assets and products (i.e. ALOADED2023Q1LABELS_BuddhalowMusic-products.csv and ALOADED2023Q1LABELS_BuddhalowMusic-assets.csv) contain the discrimnation of which is which.
+
+-   **Asset Version:** A string with 62 different values indicating the version of the recording. Examples: Remix, Slow Remix, Old Edit...
+
+-   **Asset Artist:** A string with the name of the recording artist.
+
+-   **Asset Duration:** The track length. In this case it is seconds, instead of miliseconds like in Spotify[^1].
+
+-   **Sale net receipts calculation:** A string with the formula used to calculate the variable **Sale net receipts**. It is the multiplication of the price, with percentage of sale, percentage of asset and the exchange rate. The exchange rate is the rate between whatever currency the price was defined (mostly Euros or Dollars) and Swedish Krona.
+
+$$price \times \%\ of\ sale \times \%\ of\ asset \times exchange\_rate = value\ in\ Swedish\ kr$$
+
+-   **Sale net receipts:** The value received from the sales in Swedish Krona as calculated by the formula displayed in the **Sale net receipts calculation** column.
+
+-   **Contract term deal:** Seems to be a percentage of the sales that go to the artist. In this data set we only observe 80\%. The reason seems to be because we only have one artists.
+
+-   **Contract Reference:** I am not sure what this column means. It has only one value "Buddhalow Music". My best guess is that this is the record label of Dr. Sounds.
+
+-   **Reported Royalty:** Value received by the artist after discounting the distributor fees. These values are obtained by multiplying **Sale net receipts** by **Contract term deal**.
+
+-   **Asset Product:** It specifies whether a sale concerned an Asset or a Product. I am not sure what this means, but in the tables with the names ending with assets and products you can find the specification of which is which (e.g. ALOADED2023Q1LABELS_BuddhalowMusic-products.csv and ALOADED2023Q1LABELS_BuddhalowMusic-assets.csv).
+
+-   **Territory:** A string with the two letter country code (according to @ISO3166). There are some sales where the value for is missing, I cannot find an explanation for that.
+
+-   **Quantity:** I am not sure what this variable means. It seems to be how many "units of the product" were sold. For instance, if **Quantity** = 2 for **Sale Type** = streaming (described below), that seems to mean that the track was streamed 2. Though, I am not sure.
+
+-   **Sale Type:** String with the type of sale. Seem to be the same types described in the IFPI Global Music Report (@smirke2024ifpi). Examples: streaming, download, synchronization, etc.
+
+-   **Sale User Type:** A string containing the user type. Most values are missing. The types are the ones in the table below.
+
+<div style="width: 50%; margin: 0 auto;">
+  <table>
+    <thead>
+      <tr><th>**Sale User Type**</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ad-supported</td></tr>
+      <tr><td>Bundle</td></tr>
+      <tr><td>DUO</td></tr>
+      <tr><td>Family plan</td></tr>
+      <tr><td>Other</td></tr>
+      <tr><td>Partner-provided</td></tr>
+      <tr><td>Premium</td></tr>
+      <tr><td>Promo</td></tr>
+      <tr><td>Student</td></tr>
+      <tr><td>Trial</td></tr>
+      <tr><td>User generated content</td></tr>
+    </tbody>
+  </table>
+</div>
+
+-   **Sale Start Date:** The first day of the month, in the format yyyy-mm-dd.
+
+-   **Sale End Date:** The last day of the month, in the format yyyy-mm-dd.
+
+-   **Sale Store Name:** The name of the service. Examples: Spotify, Youtube Music, etc.
+
+-   **DSP:** I am not sure what this column means. It seems to be almost the same as **Sales Store Name** for every row, however in some cases I see, for instance, **Sales Store Name** = Pretzel Rocks and **DSP** = Pretzel. Not sure what the difference is. Luckily, in the case that will be our focus now, i.e. Spotify, both columns always show Spotify.
+
+-   **Royalty Calculation Base:** A single value column with the string "royalty" in every cell.
+
+-   **Product Reference:** This column only contains NA's.
+
+-   **Asset Reference::** This column only contains NA's.
+
+-   **Product Share:** This column contain the values the values used in the column **Sale net receipts calculation** represented by the $\%\ of\ sale$ in the formula. Most values are 1, representing $100\% sale$. Though there are 3 values that are 0.333, these values represent the same asset SEYOK1126804.
+
+-   **Asset Share:** This column contain values used in the column **Sale net receipts calculation** represented by $\%\ of\ asset$ in the formula.
+
+-   **Exchange Rate:** The exchange rate from the currency the sale was made to Swedish Krona. The value change monthly. This value is used in the column **Sale net receipts calculation**, represented by $exchange\ rate$ in the formula.
+
+-   **Currency:** The currency in which the sale was made.
+
+-   **Product Title:** The title of the product. They are mostly the same as the **Asset Title** column, but some are different. Again, which one is an asset and which one is a product are probably on the table ALOADED2023Q1LABELS_BuddhalowMusic-products.csv and ALOADED2023Q1LABELS_BuddhalowMusic-assets.csv.
+
+-   **Product Artist:** This column seems to contain the same values as the column **Asset Artist**. There are some mismatches though. For instance, asset GBKPL1672667 contains **Asset Artist** = *Dr. Sounds featuring Alexander Forselius and Buddhalow* and **Product Artist** = *Dr. Sounds featuring Buddhalow*. I am not sure what the difference is. 
+
+-   **Product UPC:** This seems to be the Universal Product Code, probably according to @ISO15420. I can't be sure because Wikipedia[^2] says that this contain has 12 digits, but some values in this column contain 13 digits.
+
+-   **Product Catalog Number:** usually the same as **Product UPC** and possibly only used internally by ALOADED. There are some mismatches, see some examples in the table below
+
+| **Asset ISRC** | **Product UPC** | **Product Catalog Number** |
+|:---:|:----:|:----:|
+| SE5UU1903001 | 707772244174 | transferALOADED |
+| SE5UU1903403 | 8718857964230| BM8718857964230 |
+| SEYOK1710262 | 885014689331 | RU 98097 |
+
+-   **Product Label:** The label of the product. There are only five unique labels (see table below). I am beginning to think that Product is a album and Asset is a track. Though, given the information they provided us, I cannot be certain.
+
+<div style="width: 50%; margin: 0 auto;">
+  <table>
+    <thead>
+      <tr><th>**Product Label**</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Buddhalow Music</td></tr>
+      <tr><td>Artistconnector</td></tr>
+      <tr><td>Dr. Sounds — distributed by amuse.io</td></tr>
+      <tr><td>Duva</td></tr>
+      <tr><td>Krikelin</td></tr>
+    </tbody>
+  </table>
+</div>
+
+-   **Report Run ID:** I am not sure what this ID represents.
+
+-   **Report ID:** I am not sure what this ID represents.
+
+-   **Sale ID:** A sale ID.
+
+-   **Statement Run ID:** An ID that refers to the period in which the sale was made (see **Statement Run Name** column description).
+
+-   **Statement Run Name:** A statement with the period to which the sale is refered. For example, ALOADED 2023 Q1 LABELS, seems to represent sales made by ALOADED in 2023 Q1. I don't know the meaning of the word LABELS in the end, but it seems to be related to fact the each royalty payment seems to be tied to one label through the variable **Product Label**.
+
+
+## Columns that can be obtained as a function of other columns
+
+-   **Sales net receipts:** This column can be obtained by multiplying
+
+$$Sales\ net\ receipts = price\ \times Product\ Share\ \times Asset\ Share\ \times  Exchange\ Rate$$
+There is no **price** column, but I will extract this information from the column **Sale net receipts calculation**.
+
+- **Reported Royalty**: This column is obtained by multiplying
+
+$$Reported\ Royalty = Sale\ net\ receipts\ \times Contract\ Term\ Deal$$
+
+[^1]: <https://developer.spotify.com/documentation/web-api/reference/get-track>
+[^2]: <https://en.wikipedia.org/wiki/Universal_Product_Code>
+
+## References {.unnumbered}
