@@ -23,7 +23,10 @@ These functions should work as long as you have the right name of the page on wi
 
 Let's have a look at some Slovak artists from our list
 
-```{r}
+```{r articles}
+## would it be possible to work with URLs or identity numbers of articles instead of their
+## labels, as an alternative?  for long-term it is easier to identify things via non-changin
+## urls or ids.
 article_title <- c("Živé kvety",
                    "Smejko a Tanculienka",
                    "Separ",
@@ -51,7 +54,12 @@ language_code <- "sk"
 Let's just pass those names to our functions:
 
 
-```{r}
+```{r massretreive}
+## I think it would be better to use a for loop here 
+## and purrr::safely to ensure that if there is an error on the side of the server
+## your chain does not completely stop
+## also the lapply loop with a longer list of articles will fill up the memory very fast
+
 df <- lapply(1:length(article_title), function(i) data.frame(article_length = get_article_length(language_code, article_title[i]),
                                                        number_of_editors = get_unique_editors(language_code, article_title[i]),
                                                        creation_date = get_creation_date(language_code, article_title[i]),
