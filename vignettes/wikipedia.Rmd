@@ -1,0 +1,75 @@
+---
+title: "Wikipedia"
+author: "Fabio Vieira"
+date: "2024-11-11"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Converting Prices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(openmusesampling)
+```
+
+## Extracting metrics from wikipedia
+
+I have written a few functions to extract some page related metrics from wikipedia. 
+
+As always, this is just a suggestion and we can further explore this idea. But I thought it would be nice for use to have some functions that will extract some variables/attributes we might want to use from wikipedia. I can come up with other functions once we know what else we could use from wikipedia.
+
+These functions should work as long as you have the right name of the page on wikipedia.
+
+Let's have a look at some Slovak artists from our list
+
+```{r}
+article_title <- c("Živé kvety",
+                   "Smejko a Tanculienka",
+                   "Separ",
+                   "Robo Opatovský",
+                   "Richard Müller (spevák)",
+                   "Peter Pann",
+                   "Pesničky pre (ne)poslušné deti",
+                   "Pavol Hammel",
+                   "No Name",
+                   "Miroslav Žbirka",
+                   "Miro Jaroš",
+                   "Ľubomír Rehák",
+                   "Kollárovci",
+                   "Karpatské chrbáty (hudobná skupina)",
+                   "Kali",
+                   "Ivan Tásler",
+                   "Hex (slovenská skupina)",
+                   "Heľenine oči",
+                   "Adam Ďurica")
+language_code <- "sk"
+```
+
+## Creating data frame with variables/attributes 
+
+Let's just pass those names to our functions:
+
+
+```{r}
+df <- lapply(1:length(article_title), function(i) data.frame(article_length = get_article_length(language_code, article_title[i]),
+                                                       number_of_editors = get_unique_editors(language_code, article_title[i]),
+                                                       creation_date = get_creation_date(language_code, article_title[i]),
+                                                       average_edit_time = get_average_edit_time(language_code, article_title[i]),
+                                                       number_of_edits = get_number_of_edits(language_code, article_title[i]),
+                                                       reference_count = get_reference_count(language_code, article_title[i]),
+                                                       quality_class = get_quality_class(language_code, article_title[i])))
+df <- do.call(rbind, df)
+row.names(df) <- article_title
+head(df)
+```
+
+## Columns in the data frame
+
+  - **article_length:** the length of the article in bytes.
+  - **number_of_editors:** the number of editors of an article.
+  - **creation_date:** the creation date of a page.   
+  - **average_edit_time:** average time between successive edits.
+  - **number_of_edits:** number of times a page was edited.
+  - **reference_count:** number of references in a page.
+  - **quality_class:** the quality class of a page (if available).
